@@ -1,96 +1,116 @@
-@extends('layouts.public')
+@extends('layouts.ecosystem')
 
-@section('title', 'TITORA Ecosystem | Products. Platforms. Infrastructure.')
-@section('description', 'The central hub for the TITORA ecosystem of digital infrastructure and growth platforms.')
+@section('title', 'The TITORA Ecosystem')
+@section('description', 'Attention. Systems. Infrastructure. Intelligence.')
 
 @section('theme_styles')
 <style>
     body {
-        background-color: #000000;
-        background-image: radial-gradient(circle at top, rgba(20, 20, 25, 1) 0%, rgba(0, 0, 0, 1) 100%);
-        color: #ededed;
+        background-color: #050505;
+        color: #e5e5e5;
+    }
+    .dark-mode-override {
+        background-color: #050505;
+        color: #e5e5e5;
+    }
+    .stack-line {
+        width: 1px;
+        background: linear-gradient(to bottom, transparent, #333, transparent);
+        margin: 0 auto;
     }
 </style>
 @endsection
 
 @section('content')
-<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20 animate-fade-in-up font-sans">
+<div class="w-full min-h-screen animate-fade-in-up font-sans dark-mode-override">
     
     <!-- Hero Section -->
-    <div class="text-center mb-24 mt-12">
-        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tighter mb-6 bg-clip-text text-transparent bg-gradient-to-b from-white to-gray-500">
-            TITORA Ecosystem
-        </h1>
-        <p class="text-xl md:text-2xl font-medium text-gray-400 tracking-tight">
-            Products. Platforms. Infrastructure.
+    <div class="max-w-4xl mx-auto px-6 pt-32 pb-16 text-center">
+        <h1 class="text-xs tracking-[0.3em] font-mono text-zinc-500 uppercase mb-8">The TITORA Ecosystem</h1>
+        <div class="text-4xl md:text-6xl font-black tracking-tighter text-white mb-12 flex flex-col gap-2">
+            <span>Attention.</span>
+            <span class="text-zinc-400">Systems.</span>
+            <span class="text-zinc-600">Infrastructure.</span>
+            <span class="text-zinc-800">Intelligence.</span>
+        </div>
+        <p class="text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed">
+            Not a collection of brands, but a vertically integrated stack. The ecosystem itself is the product.
         </p>
     </div>
 
-    <!-- Core Platforms Grid -->
-    <div class="mb-32">
-        <h2 class="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-8 text-center">Core Platforms</h2>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            @php
-                $mainProfiles = $profiles->filter(fn($p) => in_array($p->slug, ['titora', 'doob', 'karadavi', 'smxm']));
-            @endphp
+    <!-- The Integrated Machine (Architecture Diagram) -->
+    <div class="max-w-3xl mx-auto px-6 pb-32">
+        <div class="border border-zinc-800 bg-[#0a0a0a] rounded-xl p-8 md:p-16">
+            <h2 class="text-xs tracking-widest font-mono text-zinc-500 uppercase mb-16 text-center">Integrated Ecosystem Architecture</h2>
             
-            @foreach($mainProfiles as $profile)
-                <a href="{{ route('profile.show', $profile->slug) }}" class="group block relative rounded-2xl bg-gradient-to-b from-[#111] to-[#0a0a0a] border border-[#222] p-8 hover:border-gray-500 transition-all duration-500 overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    
-                    <div class="relative z-10 flex flex-col h-full">
-                        <div class="flex items-center justify-between mb-6">
-                            @if($profile->avatar)
-                                <img src="{{ Storage::disk('public')->url($profile->avatar) }}" alt="{{ $profile->name }}" class="w-12 h-12 rounded-full border border-gray-700">
-                            @else
-                                <div class="w-12 h-12 rounded-full border border-gray-700 bg-gray-800 flex items-center justify-center text-sm font-bold text-white">
-                                    {{ strtoupper(substr($profile->name, 0, 2)) }}
-                                </div>
-                            @endif
-                            
-                            <div class="text-gray-500 group-hover:text-white transition-colors duration-300">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                            </div>
-                        </div>
-                        
-                        <h3 class="text-2xl font-bold text-white mb-2 tracking-tight">{{ $profile->name }}</h3>
-                        <p class="text-gray-400 font-medium mb-6 flex-grow">{{ $profile->headline }}</p>
+            <div class="flex flex-col relative">
+                
+                <!-- SMXM Node -->
+                <a href="{{ route('profile.show', 'smxm') }}" class="group relative z-10 flex flex-col md:flex-row items-center md:items-start gap-6 p-6 border border-zinc-800 bg-black rounded-lg hover:border-pink-500/50 transition-colors">
+                    <div class="w-16 h-16 flex-shrink-0 bg-zinc-900 border border-zinc-800 rounded flex items-center justify-center font-black text-xl text-white group-hover:text-pink-500 transition-colors">S.</div>
+                    <div class="text-center md:text-left">
+                        <h3 class="text-xl font-bold text-white tracking-tight mb-1">SMXM</h3>
+                        <p class="text-sm font-mono text-pink-500 mb-3">Creates demand.</p>
+                        <p class="text-sm text-zinc-500">The attention acquisition engine. High-velocity cultural output that generates massive top-of-funnel volume and awareness.</p>
                     </div>
                 </a>
-            @endforeach
+
+                <div class="stack-line h-12 relative">
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0a0a0a] px-2 text-xs font-mono text-zinc-600">↓ routes attention to</div>
+                </div>
+
+                <!-- TITORA Node -->
+                <a href="{{ route('profile.show', 'titora') }}" class="group relative z-10 flex flex-col md:flex-row items-center md:items-start gap-6 p-6 border border-zinc-800 bg-black rounded-lg hover:border-blue-500/50 transition-colors">
+                    <div class="w-16 h-16 flex-shrink-0 bg-zinc-900 border border-zinc-800 rounded flex items-center justify-center font-bold text-xl text-white font-mono group-hover:text-blue-500 transition-colors">TI</div>
+                    <div class="text-center md:text-left">
+                        <h3 class="text-xl font-bold text-white tracking-tight mb-1">TITORA</h3>
+                        <p class="text-sm font-mono text-blue-500 mb-3">Captures and converts demand.</p>
+                        <p class="text-sm text-zinc-500">The growth systems architecture. Converts raw attention into qualified, algorithmic conversion structures.</p>
+                    </div>
+                </a>
+
+                <div class="stack-line h-12 relative">
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0a0a0a] px-2 text-xs font-mono text-zinc-600">↓ scales through</div>
+                </div>
+
+                <!-- DOOB Node -->
+                <a href="{{ route('profile.show', 'doob') }}" class="group relative z-10 flex flex-col md:flex-row items-center md:items-start gap-6 p-6 border border-zinc-800 bg-black rounded-lg hover:border-emerald-500/50 transition-colors">
+                    <div class="w-16 h-16 flex-shrink-0 bg-zinc-900 border border-zinc-800 rounded flex items-center justify-center font-bold text-sm text-white group-hover:text-emerald-500 transition-colors">DOOB</div>
+                    <div class="text-center md:text-left">
+                        <h3 class="text-xl font-bold text-white tracking-tight mb-1">DOOB</h3>
+                        <p class="text-sm font-mono text-emerald-500 mb-3">Scales and routes demand.</p>
+                        <p class="text-sm text-zinc-500">The infrastructure layer. The network mesh and execution pipelines required to handle conversion data at internet scale.</p>
+                    </div>
+                </a>
+
+                <div class="stack-line h-12 relative">
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0a0a0a] px-2 text-xs font-mono text-zinc-600">↓ secured by</div>
+                </div>
+
+                <!-- KARADAVI Node -->
+                <a href="{{ route('profile.show', 'karadavi') }}" class="group relative z-10 flex flex-col md:flex-row items-center md:items-start gap-6 p-6 border border-zinc-800 bg-black rounded-lg hover:border-zinc-400 transition-colors">
+                    <div class="w-16 h-16 flex-shrink-0 bg-zinc-900 border border-zinc-800 rounded flex items-center justify-center font-bold text-sm text-white font-serif italic group-hover:text-zinc-300 transition-colors">K/R</div>
+                    <div class="text-center md:text-left">
+                        <h3 class="text-xl font-bold text-white tracking-tight mb-1 font-serif italic">KARADAVI</h3>
+                        <p class="text-sm font-mono text-zinc-400 mb-3">Builds machine trust.</p>
+                        <p class="text-sm text-zinc-500">The intelligence and perception organization. Maps and structures entity authority so the entire stack is recognized by synthetic intelligence.</p>
+                    </div>
+                </a>
+
+            </div>
         </div>
     </div>
 
-    <!-- Founder Section -->
+    <!-- Systems Architect Link -->
     @php
         $arun = $profiles->firstWhere('slug', 'arun');
     @endphp
     @if($arun)
-    <div class="mb-32">
-        <div class="rounded-3xl border border-[#222] bg-[#0a0a0a] p-10 md:p-16 relative overflow-hidden group">
-            <div class="absolute top-0 right-0 -mt-20 -mr-20 w-96 h-96 bg-blue-900/10 rounded-full blur-3xl group-hover:bg-blue-900/20 transition-all duration-700"></div>
-            
-            <div class="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-10">
-                @if($arun->avatar)
-                    <img src="{{ Storage::disk('public')->url($arun->avatar) }}" alt="{{ $arun->name }}" class="w-32 h-32 rounded-full border border-gray-700 shadow-2xl">
-                @else
-                    <div class="w-32 h-32 rounded-full border border-gray-700 bg-gray-900 flex items-center justify-center text-3xl font-bold text-white shadow-2xl shrink-0">
-                        {{ strtoupper(substr($arun->name, 0, 2)) }}
-                    </div>
-                @endif
-                
-                <div class="text-center md:text-left flex-grow">
-                    <h2 class="text-3xl font-bold text-white mb-2 tracking-tight">{{ $arun->name }}</h2>
-                    <p class="text-gray-400 font-medium mb-6">{{ $arun->headline }}</p>
-                    <p class="text-gray-300 max-w-xl leading-relaxed mb-8">{{ $arun->bio ?? 'Building Digital Infrastructure. Overseeing the TITORA ecosystem of brands and products.' }}</p>
-                    
-                    <a href="{{ route('profile.show', $arun->slug) }}" class="inline-flex items-center justify-center px-6 py-3 border border-[#333] hover:border-gray-400 bg-white/5 hover:bg-white/10 rounded-full text-sm font-semibold text-white transition-all duration-300">
-                        View Founder OS
-                    </a>
-                </div>
-            </div>
-        </div>
+    <div class="max-w-3xl mx-auto px-6 pb-24 text-center">
+        <a href="{{ route('profile.show', $arun->slug) }}" class="inline-flex items-center gap-3 px-6 py-3 border border-zinc-800 rounded-full hover:bg-zinc-900 transition-colors">
+            <span class="w-2 h-2 rounded-full bg-zinc-500"></span>
+            <span class="text-sm font-mono text-zinc-400 uppercase tracking-widest">View Systems Architect</span>
+        </a>
     </div>
     @endif
 

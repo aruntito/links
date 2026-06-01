@@ -1,7 +1,7 @@
-@extends('layouts.public')
+@extends('layouts.ecosystem')
 
-@section('title', $profile->seo_title ?: 'KARADAVI | The Machine Trust Era')
-@section('description', $profile->seo_description ?: 'Machine Trust, AI Discoverability, Perception Infrastructure, and Entity Authority.')
+@section('title', $profile->seo_title ?: 'KARADAVI | Intelligence Organization')
+@section('description', $profile->seo_description ?: 'Research institute analyzing machine trust and entity authority.')
 @if($profile->avatar)
 @section('og_image', Storage::disk('public')->url($profile->avatar))
 @endif
@@ -9,16 +9,16 @@
 @section('theme_styles')
 <style>
     body {
-        background-color: #fcfcfc;
+        background-color: #f7f7f5; /* Off-white paper feel */
         color: #1a1a1a;
     }
     .dark-mode-override {
-        background-color: #111111;
-        color: #e5e5e5;
+        background-color: #0f0f0f;
+        color: #d4d4d4;
     }
-    /* Simple custom serif override for editorial feel */
+    /* Serious editorial serif */
     .font-editorial {
-        font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+        font-family: "Times New Roman", Times, serif;
     }
 </style>
 @endsection
@@ -26,97 +26,149 @@
 @section('content')
 @php
     $featuredLinks = $profile->links->where('is_featured', true);
-    // Determine background based on profile config, defaulting to dark mode override for a Stripe Press feel
+    // Force dark mode for a serious, classified dossier feel.
     $isDark = true; 
 @endphp
 
-<div class="w-full animate-fade-in-up font-sans {{ $isDark ? 'dark-mode-override' : '' }}">
+<div class="w-full min-h-screen animate-fade-in-up font-sans {{ $isDark ? 'dark-mode-override' : '' }}">
     
     <!-- Navbar -->
-    <header class="w-full max-w-5xl mx-auto px-8 py-10 flex items-center justify-between border-b {{ $isDark ? 'border-[#333]' : 'border-gray-200' }}">
+    <header class="w-full max-w-5xl mx-auto px-8 py-10 flex flex-col md:flex-row items-start md:items-center justify-between border-b {{ $isDark ? 'border-[#333]' : 'border-gray-300' }} gap-6">
         <div class="flex items-center gap-4">
             @if($profile->avatar)
-                <img src="{{ Storage::disk('public')->url($profile->avatar) }}" alt="{{ $profile->name }}" class="w-10 h-10 object-cover grayscale">
+                <img src="{{ Storage::disk('public')->url($profile->avatar) }}" alt="{{ $profile->name }}" class="w-12 h-12 object-cover grayscale border {{ $isDark ? 'border-[#444]' : 'border-black' }}">
             @else
-                <div class="w-10 h-10 border {{ $isDark ? 'border-[#444] bg-[#1a1a1a]' : 'border-black bg-white' }} flex items-center justify-center text-sm tracking-widest font-editorial">
-                    KR
+                <div class="w-12 h-12 border {{ $isDark ? 'border-[#444] bg-[#1a1a1a]' : 'border-black bg-white' }} flex items-center justify-center text-sm tracking-widest font-editorial">
+                    K/R
                 </div>
             @endif
-            <span class="font-bold text-lg tracking-[0.2em] uppercase {{ $isDark ? 'text-white' : 'text-black' }}">KARADAVI</span>
+            <div class="flex flex-col">
+                <span class="font-bold text-lg tracking-[0.2em] uppercase {{ $isDark ? 'text-white' : 'text-black' }}">KARADAVI</span>
+                <span class="text-xs tracking-widest uppercase {{ $isDark ? 'text-[#666]' : 'text-gray-500' }}">Intelligence Organization</span>
+            </div>
         </div>
-        <div class="hidden md:flex gap-8 text-sm tracking-widest uppercase">
+        <div class="flex gap-8 text-xs tracking-[0.2em] uppercase font-bold">
+            <a href="#domains" class="{{ $isDark ? 'text-[#888] hover:text-white' : 'text-gray-500 hover:text-black' }} transition-colors">Domains</a>
             <a href="#briefings" class="{{ $isDark ? 'text-[#888] hover:text-white' : 'text-gray-500 hover:text-black' }} transition-colors">Briefings</a>
-            <a href="#research" class="{{ $isDark ? 'text-[#888] hover:text-white' : 'text-gray-500 hover:text-black' }} transition-colors">Research</a>
         </div>
     </header>
 
-    <!-- 1. Editorial Hero -->
-    <section class="max-w-5xl mx-auto px-8 py-24 md:py-32">
-        <h1 class="text-6xl md:text-8xl font-editorial tracking-tight mb-8 leading-[1.1] {{ $isDark ? 'text-white' : 'text-black' }}">
+    <!-- 1. Hero -->
+    <section class="max-w-5xl mx-auto px-8 pt-32 pb-24">
+        <h1 class="text-6xl md:text-[7rem] font-editorial tracking-tight mb-12 leading-[1.05] {{ $isDark ? 'text-[#f5f5f5]' : 'text-black' }}">
             The Machine<br>Trust Era.
         </h1>
-        <p class="text-xl md:text-2xl font-editorial italic max-w-2xl leading-relaxed {{ $isDark ? 'text-[#a1a1a1]' : 'text-gray-600' }}">
-            Researching the intersection of AI discoverability, perception infrastructure, and entity authority.
-        </p>
+        <div class="grid md:grid-cols-2 gap-12">
+            <div>
+                <p class="text-xl font-editorial italic leading-relaxed {{ $isDark ? 'text-[#a1a1a1]' : 'text-gray-600' }}">
+                    The transition from human-indexed search (SEO) to machine-synthesized intelligence (AEO) fundamentally alters how entities establish authority.
+                </p>
+            </div>
+            <div class="border-l {{ $isDark ? 'border-[#333]' : 'border-gray-300' }} pl-8">
+                <div class="text-xs tracking-widest uppercase mb-4 {{ $isDark ? 'text-[#666]' : 'text-gray-500' }}">Research Focus</div>
+                <p class="text-sm leading-relaxed {{ $isDark ? 'text-[#888]' : 'text-gray-600' }}">
+                    KARADAVI maps perception infrastructure, analyzing the exact mechanisms by which prominent language models assign trust, retrieve citations, and rank structural data.
+                </p>
+            </div>
+        </div>
     </section>
 
-    <!-- 2. Latest Briefing -->
-    <section class="border-t border-b {{ $isDark ? 'border-[#333] bg-[#161616]' : 'border-gray-200 bg-gray-50' }}">
-        <div class="max-w-5xl mx-auto px-8 py-16 grid md:grid-cols-12 gap-8 items-start">
-            <div class="md:col-span-3 text-sm tracking-widest uppercase {{ $isDark ? 'text-[#666]' : 'text-gray-400' }}">
-                Latest Briefing
+    <!-- 2. Immediately: Briefing 001 -->
+    <section class="border-y {{ $isDark ? 'border-[#333] bg-[#111]' : 'border-gray-300 bg-gray-100' }}">
+        <div class="max-w-5xl mx-auto px-8 py-20">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="w-3 h-3 bg-red-600 rounded-full animate-pulse"></div>
+                <div class="text-xs tracking-widest uppercase font-bold text-red-600">Active Briefing</div>
             </div>
-            <div class="md:col-span-9">
-                <h2 class="text-3xl font-editorial mb-4 hover:underline cursor-pointer {{ $isDark ? 'text-white' : 'text-black' }}">How LLMs perceive organizational entities in 2026.</h2>
-                <p class="mb-6 leading-relaxed {{ $isDark ? 'text-[#888]' : 'text-gray-600' }}">
-                    The transition from SEO to AEO (Artificial Engine Optimization) requires a fundamental shift from keyword density to knowledge graph proximity. We analyze the exact mechanisms by which prominent language models assign trust and authority to digital entities.
+            
+            <h2 class="text-4xl md:text-5xl font-editorial mb-6 {{ $isDark ? 'text-white' : 'text-black' }}">Briefing 001: The Collapse of Visibility</h2>
+            
+            <div class="max-w-3xl">
+                <p class="text-lg leading-relaxed mb-8 {{ $isDark ? 'text-[#a1a1a1]' : 'text-gray-700' }}">
+                    As generative interfaces capture query volume, traditional link equity is being replaced by semantic relationship strength. Organizations relying on legacy keyword optimization face a zero-click extinction event. We detail the necessary architectural pivots to survive the algorithmic shift.
                 </p>
-                <a href="#" class="inline-flex items-center gap-2 text-sm uppercase tracking-widest {{ $isDark ? 'text-white hover:text-[#888]' : 'text-black hover:text-gray-500' }} transition-colors">
-                    Read Report <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                <a href="#" class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-bold pb-2 border-b {{ $isDark ? 'border-white text-white hover:text-[#888] hover:border-[#888]' : 'border-black text-black hover:text-gray-500 hover:border-gray-500' }} transition-colors">
+                    Access Full Dossier →
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- 3. Intelligence Areas -->
-    <section class="max-w-5xl mx-auto px-8 py-24">
-        <div class="grid md:grid-cols-2 gap-16">
+    <!-- 3. Research Domains -->
+    <section id="domains" class="max-w-5xl mx-auto px-8 py-32">
+        <h3 class="text-xs tracking-widest uppercase mb-16 pb-4 border-b {{ $isDark ? 'border-[#333] text-[#666]' : 'border-gray-300 text-gray-500' }}">Research Domains</h3>
+        
+        <div class="grid md:grid-cols-2 gap-x-16 gap-y-20">
+            <!-- Domain 1 -->
             <div>
-                <h3 class="text-sm tracking-widest uppercase mb-8 pb-4 border-b {{ $isDark ? 'border-[#333] text-[#666]' : 'border-gray-200 text-gray-400' }}">Area I</h3>
-                <h4 class="text-2xl font-editorial mb-4 {{ $isDark ? 'text-white' : 'text-black' }}">Perception Infrastructure</h4>
-                <p class="leading-relaxed {{ $isDark ? 'text-[#888]' : 'text-gray-600' }}">
-                    Building the structural data necessary for language models to correctly categorize, parse, and cite your brand as an authoritative source in zero-click environments.
+                <div class="text-xs font-mono mb-4 {{ $isDark ? 'text-[#555]' : 'text-gray-400' }}">D-01</div>
+                <h4 class="text-2xl font-editorial mb-4 {{ $isDark ? 'text-white' : 'text-black' }}">Machine Trust Models</h4>
+                <p class="text-sm leading-relaxed {{ $isDark ? 'text-[#888]' : 'text-gray-600' }}">
+                    Investigating the heuristic models used by LLMs to verify organizational legitimacy, factuality, and data provenance in the absence of traditional human signals.
                 </p>
             </div>
+            <!-- Domain 2 -->
             <div>
-                <h3 class="text-sm tracking-widest uppercase mb-8 pb-4 border-b {{ $isDark ? 'border-[#333] text-[#666]' : 'border-gray-200 text-gray-400' }}">Area II</h3>
+                <div class="text-xs font-mono mb-4 {{ $isDark ? 'text-[#555]' : 'text-gray-400' }}">D-02</div>
                 <h4 class="text-2xl font-editorial mb-4 {{ $isDark ? 'text-white' : 'text-black' }}">Entity Authority</h4>
-                <p class="leading-relaxed {{ $isDark ? 'text-[#888]' : 'text-gray-600' }}">
-                    Moving beyond traditional link equity into semantic relationship strength. How to weave your brand into the training corpus of the next generation of models.
+                <p class="text-sm leading-relaxed {{ $isDark ? 'text-[#888]' : 'text-gray-600' }}">
+                    Analyzing how brands move from being a semantic unknown to a recognized, authoritative node within a model's internal knowledge graph.
+                </p>
+            </div>
+            <!-- Domain 3 -->
+            <div>
+                <div class="text-xs font-mono mb-4 {{ $isDark ? 'text-[#555]' : 'text-gray-400' }}">D-03</div>
+                <h4 class="text-2xl font-editorial mb-4 {{ $isDark ? 'text-white' : 'text-black' }}">Perception Infrastructure</h4>
+                <p class="text-sm leading-relaxed {{ $isDark ? 'text-[#888]' : 'text-gray-600' }}">
+                    The architectural requirements—structured data, schema markup, and network APIs—necessary to feed clean, parsable data directly into AI ingestion engines.
+                </p>
+            </div>
+            <!-- Domain 4 -->
+            <div>
+                <div class="text-xs font-mono mb-4 {{ $isDark ? 'text-[#555]' : 'text-gray-400' }}">D-04</div>
+                <h4 class="text-2xl font-editorial mb-4 {{ $isDark ? 'text-white' : 'text-black' }}">Citation Topology</h4>
+                <p class="text-sm leading-relaxed {{ $isDark ? 'text-[#888]' : 'text-gray-600' }}">
+                    Mapping the digital proximity required to trigger unprompted citations and recommendations by AI agents during synthesis.
+                </p>
+            </div>
+            <!-- Domain 5 -->
+            <div>
+                <div class="text-xs font-mono mb-4 {{ $isDark ? 'text-[#555]' : 'text-gray-400' }}">D-05</div>
+                <h4 class="text-2xl font-editorial mb-4 {{ $isDark ? 'text-white' : 'text-black' }}">Ontology Systems</h4>
+                <p class="text-sm leading-relaxed {{ $isDark ? 'text-[#888]' : 'text-gray-600' }}">
+                    Structuring raw semantic relationships to ensure organizational truths are inextricably linked to industry-level queries.
+                </p>
+            </div>
+            <!-- Domain 6 -->
+            <div>
+                <div class="text-xs font-mono mb-4 {{ $isDark ? 'text-[#555]' : 'text-gray-400' }}">D-06</div>
+                <h4 class="text-2xl font-editorial mb-4 {{ $isDark ? 'text-white' : 'text-black' }}">Active Investigations & Field Notes</h4>
+                <p class="text-sm leading-relaxed {{ $isDark ? 'text-[#888]' : 'text-gray-600' }}">
+                    Real-time analysis and field observations of algorithmic shifts, indexing behaviors, and emergent retrieval-augmented generation patterns.
                 </p>
             </div>
         </div>
     </section>
 
-    <!-- 4. Research Archive (Featured Links) -->
+    <!-- 4. Intelligence Briefings (Featured Links) -->
     @if($featuredLinks->count() > 0)
-    <section id="research" class="border-t {{ $isDark ? 'border-[#333]' : 'border-gray-200' }}">
-        <div class="max-w-5xl mx-auto px-8 py-24">
-            <h3 class="text-sm tracking-widest uppercase mb-12 {{ $isDark ? 'text-[#666]' : 'text-gray-400' }}">Research Archive & Publications</h3>
+    <section id="briefings" class="border-t {{ $isDark ? 'border-[#333] bg-[#0a0a0a]' : 'border-gray-300 bg-white' }}">
+        <div class="max-w-5xl mx-auto px-8 py-32">
+            <h3 class="text-xs tracking-widest uppercase mb-16 pb-4 border-b {{ $isDark ? 'border-[#333] text-[#666]' : 'border-gray-300 text-gray-500' }}">Intelligence Briefings</h3>
             
-            <div class="flex flex-col">
+            <div class="flex flex-col border-t {{ $isDark ? 'border-[#333]' : 'border-gray-300' }}">
                 @foreach($featuredLinks as $link)
-                    <a href="{{ route('links.redirect', $link->id) }}" target="_blank" rel="noopener noreferrer" class="group block py-8 border-b {{ $isDark ? 'border-[#333] hover:border-[#666]' : 'border-gray-200 hover:border-black' }} transition-colors">
-                        <div class="grid md:grid-cols-12 gap-4 items-baseline">
-                            <div class="md:col-span-2 text-sm font-mono {{ $isDark ? 'text-[#555]' : 'text-gray-400' }}">
-                                No. {{ str_pad($loop->iteration, 3, '0', STR_PAD_LEFT) }}
+                    <a href="{{ route('links.redirect', $link->id) }}" target="_blank" rel="noopener noreferrer" class="group block py-10 border-b {{ $isDark ? 'border-[#333] hover:bg-[#111]' : 'border-gray-300 hover:bg-gray-50' }} transition-colors">
+                        <div class="grid md:grid-cols-12 gap-6 items-baseline px-4">
+                            <div class="md:col-span-2 text-xs font-mono tracking-widest uppercase {{ $isDark ? 'text-[#555]' : 'text-gray-400' }}">
+                                DOC.{{ str_pad($loop->iteration, 3, '0', STR_PAD_LEFT) }}
                             </div>
                             <div class="md:col-span-10">
-                                <h4 class="text-2xl font-editorial mb-2 {{ $isDark ? 'text-[#e5e5e5] group-hover:text-white' : 'text-black group-hover:text-gray-600' }} transition-colors">
+                                <h4 class="text-2xl font-editorial mb-4 {{ $isDark ? 'text-[#e5e5e5] group-hover:text-white' : 'text-black' }} transition-colors">
                                     {{ $link->title }}
                                 </h4>
                                 @if($link->description)
-                                    <p class="{{ $isDark ? 'text-[#888]' : 'text-gray-500' }} max-w-2xl leading-relaxed">
+                                    <p class="text-sm {{ $isDark ? 'text-[#888]' : 'text-gray-500' }} max-w-2xl leading-relaxed">
                                         {{ $link->description }}
                                     </p>
                                 @endif
@@ -129,22 +181,15 @@
     </section>
     @endif
 
-    <!-- 6. Newsletter CTA -->
-    <section class="max-w-5xl mx-auto px-8 py-32 text-center">
-        <h2 class="text-3xl font-editorial mb-6 {{ $isDark ? 'text-white' : 'text-black' }}">Intelligence, delivered.</h2>
-        <p class="max-w-xl mx-auto mb-10 {{ $isDark ? 'text-[#888]' : 'text-gray-500' }}">
-            Subscribe to receive our latest research on machine trust and perception engineering directly to your inbox.
-        </p>
-        <form class="max-w-md mx-auto flex gap-2">
-            <input type="email" placeholder="Email address" class="w-full px-4 py-3 bg-transparent border {{ $isDark ? 'border-[#444] text-white focus:border-[#888]' : 'border-gray-300 text-black focus:border-black' }} rounded-none outline-none transition-colors">
-            <button type="submit" class="px-8 py-3 {{ $isDark ? 'bg-white text-black hover:bg-gray-200' : 'bg-black text-white hover:bg-gray-800' }} tracking-widest uppercase text-sm transition-colors">Subscribe</button>
-        </form>
-    </section>
-
     <!-- Footer -->
-    <footer class="border-t {{ $isDark ? 'border-[#333]' : 'border-gray-200' }} py-12">
-        <div class="max-w-5xl mx-auto px-8 text-center text-sm uppercase tracking-widest {{ $isDark ? 'text-[#555]' : 'text-gray-400' }}">
-            KARADAVI Research © {{ date('Y') }}
+    <footer class="border-t {{ $isDark ? 'border-[#333] bg-[#050505]' : 'border-gray-300 bg-gray-100' }} py-16">
+        <div class="max-w-5xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-xs uppercase tracking-widest {{ $isDark ? 'text-[#555]' : 'text-gray-400' }}">
+                KARADAVI RESEARCH © {{ date('Y') }}
+            </div>
+            <div class="text-xs font-mono {{ $isDark ? 'text-[#444]' : 'text-gray-400' }}">
+                SYS.OP. NORMAL
+            </div>
         </div>
     </footer>
 
