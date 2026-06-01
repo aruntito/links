@@ -2,19 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Profile;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
     public function show(string $slug)
     {
-        $profile = Profile::with(['links' => function ($query) {
-            $query->where('is_active', true)->orderBy('sort_order', 'asc');
-        }])
-        ->where('slug', $slug)
-        ->where('is_active', true)
-        ->firstOrFail();
+        $profileData = config("profiles.{$slug}");
+
+        if (!$profileData) {
+            abort(404);
+        }
+
+        // Convert array to object to maintain compatibility with Blade views
+        $profile = (object) $profileData;
+        
+        // Convert links to a collection of objects
+        $profile->links = collect($profileData['links'])->map(function ($link) {
+            return (object) $link;
+        });
 
         $theme = $profile->theme ?? 'default';
         if (!view()->exists("themes.{$theme}.show")) {
