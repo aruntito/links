@@ -12,8 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('profile_links', function (Blueprint $table) {
-            $table->id();
+            $table->ulid('id')->primary();
+            $table->foreignUlid('profile_id')->constrained('profiles')->cascadeOnDelete();
+            $table->string('title');
+            $table->string('description')->nullable();
+            $table->string('url');
+            $table->string('icon')->nullable();
+            $table->string('type')->default('website');
+            $table->boolean('is_featured')->default(false);
+            $table->integer('sort_order')->default(0);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
