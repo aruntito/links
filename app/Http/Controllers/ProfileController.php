@@ -16,7 +16,12 @@ class ProfileController extends Controller
         ->where('is_active', true)
         ->firstOrFail();
 
-        return view('profile.show', [
+        $theme = $profile->theme ?? 'default';
+        if (!view()->exists("themes.{$theme}.show")) {
+            $theme = 'default';
+        }
+
+        return view("themes.{$theme}.show", [
             'profile' => $profile,
         ]);
     }

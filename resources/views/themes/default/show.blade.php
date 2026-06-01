@@ -2,6 +2,9 @@
 
 @section('title', $profile->seo_title ?: $profile->name . ' | TITORA Links')
 @section('description', $profile->seo_description ?: $profile->bio)
+@if($profile->avatar)
+@section('og_image', Storage::disk('public')->url($profile->avatar))
+@endif
 
 @section('content')
 @php
@@ -19,8 +22,8 @@
              alt="{{ $profile->avatar_alt ?: $profile->name }}" 
              class="w-32 h-32 rounded-full object-cover shadow-2xl border border-white/20 mb-5">
     @else
-        <div class="w-32 h-32 rounded-full shadow-2xl border border-white/20 mb-5 bg-white/5 flex items-center justify-center text-4xl font-bold text-white/50">
-            {{ substr($profile->name, 0, 1) }}
+        <div class="w-32 h-32 rounded-full shadow-2xl border border-white/20 mb-5 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 flex items-center justify-center text-4xl font-extrabold text-white tracking-widest shadow-inner">
+            {{ strtoupper(substr($profile->name, 0, 2)) }}
         </div>
     @endif
 
@@ -47,6 +50,12 @@
     <!-- Links Container -->
     <div class="w-full space-y-4 mb-8">
         
+        @if($mainLinks->isEmpty() && $socialLinks->isEmpty())
+            <div class="w-full py-12 text-center text-white/50 bg-white/5 rounded-2xl border border-white/10 text-sm font-medium">
+                No links available yet.
+            </div>
+        @endif
+
         <!-- Featured Links -->
         @foreach($featuredLinks as $link)
             <a href="{{ route('links.redirect', $link->id) }}" 
@@ -75,7 +84,7 @@
 
     </div>
 
-    <!-- Social Links (Icons/Pills at the bottom) -->
+    <!-- Social Links -->
     @if($socialLinks->count() > 0)
         <div class="flex flex-wrap justify-center gap-4 mt-4">
             @foreach($socialLinks as $link)

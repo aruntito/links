@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'TITORA Links')</title>
     <meta name="description" content="@yield('description', '')">
+    <meta property="og:title" content="@yield('title', 'TITORA Links')">
+    <meta property="og:description" content="@yield('description', '')">
+    <meta property="og:image" content="@yield('og_image', '')">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -24,6 +27,7 @@
             animation: fadeInUp 0.6s ease-out forwards;
         }
     </style>
+    @yield('theme_styles')
 </head>
 <body class="min-h-screen antialiased flex flex-col items-center py-12 px-4 selection:bg-indigo-500 selection:text-white">
     <main class="w-full max-w-xl mx-auto">
