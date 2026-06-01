@@ -17,11 +17,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $adminPassword = Str::random(16);
+        $this->command->info("Admin User Created: admin@titora.co.in | Password: {$adminPassword}");
+
         // Admin user
         User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@titora.co.in',
-            'password' => bcrypt('password'),
+            'password' => bcrypt($adminPassword),
         ]);
 
         $profiles = [
@@ -54,6 +57,12 @@ class DatabaseSeeder extends Seeder
                 'slug' => 'smxm',
                 'headline' => 'SMXM Platform',
                 'theme' => ThemeType::SMXM->value,
+            ],
+            [
+                'name' => 'TITORA Links',
+                'slug' => 'links',
+                'headline' => 'The Platform Itself',
+                'theme' => ThemeType::DEFAULT->value,
             ],
         ];
 
