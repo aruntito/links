@@ -1,0 +1,8 @@
+[build]
+builder = "NIXPACKS"
+
+[deploy]
+# The release command runs during the deployment process, BEFORE the container starts accepting traffic.
+# This ensures migrations and caching are done before the app boots, fulfilling the requirement
+# "Do not run migrations inside application boot/start command."
+releaseCommand = "bash railway/init-app.sh"
