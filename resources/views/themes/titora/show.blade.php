@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
-@section('title', $profile->seo_title ?: $profile->name . ' | TITORA Links')
-@section('description', $profile->seo_description ?: $profile->bio)
+@section('title', $profile->seo_title ?: 'TITORA | Growth Systems & Digital Infrastructure')
+@section('description', $profile->seo_description ?: 'Turn Attention Into Qualified Leads. Marketing, Automation, Web Development, and Growth Infrastructure.')
 @if($profile->avatar)
 @section('og_image', Storage::disk('public')->url($profile->avatar))
 @endif
@@ -9,117 +9,203 @@
 @section('theme_styles')
 <style>
     body {
-        background: radial-gradient(circle at top, #1e1e2f 0%, #0b0c10 100%);
+        background-color: #000000;
+        background-image: radial-gradient(circle at top right, rgba(30, 27, 75, 0.5) 0%, rgba(0, 0, 0, 1) 100%);
+        color: #f8fafc;
     }
 </style>
 @endsection
 
 @section('content')
 @php
-    $socialTypes = ['social', 'instagram', 'youtube', 'whatsapp', 'email'];
-    $socialLinks = $profile->links->whereIn('type', $socialTypes);
-    $mainLinks = $profile->links->whereNotIn('type', $socialTypes);
-    $featuredLinks = $mainLinks->where('is_featured', true);
-    $otherLinks = $mainLinks->where('is_featured', false);
+    $featuredLinks = $profile->links->where('is_featured', true);
 @endphp
 
-<div class="flex flex-col items-center w-full animate-fade-in-up font-sans">
-    <!-- Avatar -->
-    @if($profile->avatar)
-        <img src="{{ Storage::disk('public')->url($profile->avatar) }}" 
-             alt="{{ $profile->avatar_alt ?: $profile->name }}" 
-             class="w-32 h-32 rounded-full object-cover shadow-[0_0_40px_rgba(99,102,241,0.2)] border border-indigo-500/20 mb-6">
-    @else
-        <div class="w-32 h-32 rounded-full shadow-[0_0_40px_rgba(99,102,241,0.2)] border border-indigo-500/20 mb-6 bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center text-4xl font-semibold text-indigo-400 tracking-widest">
-            {{ strtoupper(substr($profile->name, 0, 2)) }}
+<div class="w-full animate-fade-in-up font-sans">
+    
+    <!-- Navbar / Header (Simulated) -->
+    <header class="w-full max-w-6xl mx-auto px-6 py-8 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            @if($profile->avatar)
+                <img src="{{ Storage::disk('public')->url($profile->avatar) }}" alt="{{ $profile->name }}" class="w-8 h-8 rounded border border-indigo-900/50">
+            @else
+                <div class="w-8 h-8 rounded bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">TI</div>
+            @endif
+            <span class="font-bold text-xl tracking-tight text-white">TITORA</span>
         </div>
-    @endif
+        <a href="#services" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">Services</a>
+    </header>
 
-    <!-- Name & Verified -->
-    <h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 flex items-center gap-2 mb-2 tracking-tight">
-        {{ $profile->name }}
-        @if($profile->is_verified)
-            <svg class="w-6 h-6 text-indigo-500" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        @endif
-    </h1>
+    <!-- 1. Hero Section -->
+    <section class="max-w-4xl mx-auto px-6 pt-20 pb-32 text-center">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-sm font-medium mb-8">
+            <span class="w-2 h-2 rounded-full bg-indigo-500 animate-pulse"></span>
+            Growth Systems & Digital Infrastructure
+        </div>
+        <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-8 text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-500 leading-tight">
+            Turn Attention Into <br> Qualified Leads
+        </h1>
+        <p class="text-lg md:text-xl text-slate-400 font-medium mb-12 max-w-2xl mx-auto leading-relaxed">
+            Marketing. Automation. Web Development. Growth Infrastructure. We build the systems that scale your business.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="mailto:hello@titora.co.in" class="w-full sm:w-auto px-8 py-4 bg-white text-black font-semibold rounded-lg hover:bg-slate-200 transition-colors duration-300 text-center">
+                Book Discovery Call
+            </a>
+            <a href="#services" class="w-full sm:w-auto px-8 py-4 bg-slate-900 border border-slate-700 text-white font-semibold rounded-lg hover:bg-slate-800 transition-colors duration-300 text-center">
+                View Services
+            </a>
+        </div>
+    </section>
 
-    <!-- Headline -->
-    @if($profile->headline)
-        <p class="text-indigo-400 font-semibold text-sm mb-3 text-center uppercase tracking-widest">{{ $profile->headline }}</p>
-    @endif
-
-    <!-- Bio -->
-    @if($profile->bio)
-        <p class="text-slate-300 text-center text-base mb-10 max-w-sm leading-relaxed">{{ $profile->bio }}</p>
-    @endif
-
-    <!-- Links Container -->
-    <div class="w-full space-y-4 mb-10">
-        
-        @if($mainLinks->isEmpty() && $socialLinks->isEmpty())
-            <div class="w-full py-12 text-center text-slate-500 bg-slate-800/30 rounded-2xl border border-slate-700/50 text-sm font-medium">
-                No links available yet.
+    <!-- 2. Problem Section -->
+    <section class="border-y border-slate-800/50 bg-slate-900/20">
+        <div class="max-w-6xl mx-auto px-6 py-24">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold tracking-tight mb-6">Traffic without conversion is just noise.</h2>
+                    <p class="text-slate-400 leading-relaxed text-lg mb-6">
+                        Most businesses focus entirely on top-of-funnel attention, ignoring the digital infrastructure required to actually capture and convert that attention.
+                    </p>
+                    <p class="text-slate-400 leading-relaxed text-lg">
+                        We bridge the gap. By integrating modern web architecture with data-driven marketing, we turn passive observers into active revenue.
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                        <div class="text-3xl mb-2 text-rose-500">80%</div>
+                        <div class="text-sm font-medium text-slate-500">Traffic lost due to poor UX</div>
+                    </div>
+                    <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl">
+                        <div class="text-3xl mb-2 text-rose-500">3x</div>
+                        <div class="text-sm font-medium text-slate-500">Higher CAC without automation</div>
+                    </div>
+                </div>
             </div>
-        @endif
-
-        <!-- Featured Links -->
-        @foreach($featuredLinks as $link)
-            <a href="{{ route('links.redirect', $link->id) }}" 
-               target="_blank" rel="noopener noreferrer"
-               class="block w-full bg-slate-800/80 border border-slate-700/50 hover:border-indigo-500/50 hover:shadow-[0_0_30px_rgba(99,102,241,0.15)] hover:-translate-y-1 transition-all duration-300 rounded-2xl py-4 px-6 shadow-xl group relative overflow-hidden backdrop-blur-xl">
-                <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <div class="flex items-center justify-center relative z-10">
-                    <span class="font-bold text-white tracking-wide text-lg">{{ $link->title }}</span>
-                </div>
-                @if($link->description)
-                    <div class="text-sm text-slate-400 text-center mt-1 relative z-10 font-medium">{{ $link->description }}</div>
-                @endif
-            </a>
-        @endforeach
-
-        <!-- Other Links -->
-        @foreach($otherLinks as $link)
-            <a href="{{ route('links.redirect', $link->id) }}" 
-               target="_blank" rel="noopener noreferrer"
-               class="block w-full bg-slate-900/50 border border-slate-800 hover:border-slate-600 hover:bg-slate-800/80 hover:-translate-y-0.5 transition-all duration-300 rounded-xl py-4 px-6 shadow-md group backdrop-blur-md">
-                <div class="flex items-center justify-center">
-                    <span class="font-medium text-slate-200 tracking-wide">{{ $link->title }}</span>
-                </div>
-            </a>
-        @endforeach
-
-    </div>
-
-    <!-- Social Links -->
-    @if($socialLinks->count() > 0)
-        <div class="flex flex-wrap justify-center gap-5 mt-4">
-            @foreach($socialLinks as $link)
-                <a href="{{ route('links.redirect', $link->id) }}" 
-                   target="_blank" rel="noopener noreferrer"
-                   title="{{ $link->title }}"
-                   class="flex items-center justify-center w-12 h-12 rounded-full bg-slate-800/50 border border-slate-700/50 hover:bg-indigo-500 hover:border-indigo-400 hover:scale-110 transition-all duration-300 text-slate-400 hover:text-white shadow-lg">
-                   
-                   @if($link->type === 'instagram' || strtolower($link->title) === 'instagram')
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                   @elseif($link->type === 'youtube' || strtolower($link->title) === 'youtube')
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                   @elseif($link->type === 'whatsapp' || strtolower($link->title) === 'whatsapp')
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 0 5.386 0 12.035c0 2.12.553 4.195 1.602 6.012L.475 24l6.104-1.602a11.967 11.967 0 005.452 1.312h.005c6.645 0 12.03-5.386 12.03-12.034C24.066 5.386 18.676 0 12.031 0zm0 21.727h-.003a9.98 9.98 0 01-5.083-1.385l-.364-.216-3.774.99.999-3.68-.237-.376a9.987 9.987 0 01-1.528-5.321c0-5.508 4.48-9.988 9.99-9.988 5.509 0 9.989 4.48 9.989 9.988 0 5.509-4.48 9.989-9.989 9.989zm5.474-7.487c-.3-.15-1.776-.877-2.051-.977-.276-.101-.477-.15-.678.15s-.777.978-.952 1.178c-.176.2-.352.225-.653.075-2.003-1.002-3.32-2.186-4.22-3.71-.151-.253.15-.228.725-1.378.1-.15.05-.276-.025-.426-.075-.15-.678-1.63-.928-2.233-.243-.585-.49-.505-.678-.515-.175-.008-.376-.008-.577-.008s-.527.075-.802.376c-.276.3-1.053 1.028-1.053 2.506 0 1.478 1.078 2.906 1.228 3.107.151.2 2.115 3.228 5.12 4.524.716.31 1.275.495 1.708.634.72.23 1.376.197 1.89.12.576-.086 1.776-.726 2.026-1.428.25-.702.25-1.303.175-1.428-.075-.126-.276-.2-.577-.35z"/></svg>
-                   @elseif($link->type === 'email' || strtolower($link->title) === 'email')
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12.713l11.985-8.71C23.636 2.27 21.968 1 20 1H4C2.031 1 .363 2.27.015 4.004L12 12.713zm0 2.574L0 6.58V20c0 1.657 1.343 3 3 3h18c1.657 0 3-1.343 3-3V6.58l-12 8.707z"/></svg>
-                   @elseif(strtolower($link->title) === 'x' || strtolower($link->title) === 'twitter')
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
-                   @elseif(strtolower($link->title) === 'linkedin')
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                   @else
-                        <!-- Generic Link Icon -->
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12.53 16.28a.75.75 0 01-1.06 0l-7.5-7.5a.75.75 0 011.06-1.06L12 14.69l6.97-6.97a.75.75 0 111.06 1.06l-7.5 7.5z" clip-rule="evenodd" /></svg>
-                   @endif
-                </a>
-            @endforeach
         </div>
+    </section>
+
+    <!-- 3. Why TITORA -->
+    <section class="max-w-6xl mx-auto px-6 py-32">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold tracking-tight mb-4">Engineering Growth</h2>
+            <p class="text-slate-400">Why leading brands partner with us.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="p-8 rounded-2xl bg-gradient-to-b from-slate-900 to-black border border-slate-800">
+                <div class="w-12 h-12 bg-indigo-500/10 rounded-xl flex items-center justify-center mb-6 border border-indigo-500/20">
+                    <svg class="w-6 h-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Speed to Market</h3>
+                <p class="text-slate-400 leading-relaxed">We deploy modern tech stacks that launch faster and perform better than legacy platforms.</p>
+            </div>
+            <div class="p-8 rounded-2xl bg-gradient-to-b from-slate-900 to-black border border-slate-800">
+                <div class="w-12 h-12 bg-indigo-500/10 rounded-xl flex items-center justify-center mb-6 border border-indigo-500/20">
+                    <svg class="w-6 h-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Data-Driven Architecture</h3>
+                <p class="text-slate-400 leading-relaxed">Every decision is backed by analytics. We build systems that track, measure, and optimize.</p>
+            </div>
+            <div class="p-8 rounded-2xl bg-gradient-to-b from-slate-900 to-black border border-slate-800">
+                <div class="w-12 h-12 bg-indigo-500/10 rounded-xl flex items-center justify-center mb-6 border border-indigo-500/20">
+                    <svg class="w-6 h-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3">End-to-End Automation</h3>
+                <p class="text-slate-400 leading-relaxed">We connect your marketing tools to your backend logic to remove friction and save hours.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Services Grid -->
+    <section id="services" class="max-w-6xl mx-auto px-6 py-24">
+        <h2 class="text-3xl font-bold tracking-tight mb-12">Core Capabilities</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="group relative bg-slate-900 border border-slate-800 rounded-2xl p-8 hover:bg-slate-800 transition-colors duration-300">
+                <h3 class="text-2xl font-bold mb-4">Web Development</h3>
+                <p class="text-slate-400 mb-6 max-w-sm">High-performance React, Vue, and Laravel applications engineered for conversion.</p>
+                <ul class="space-y-2 text-sm text-slate-500 font-medium">
+                    <li>• Custom Web Apps</li>
+                    <li>• SaaS Architecture</li>
+                    <li>• Marketing Landing Pages</li>
+                </ul>
+            </div>
+            <div class="group relative bg-slate-900 border border-slate-800 rounded-2xl p-8 hover:bg-slate-800 transition-colors duration-300">
+                <h3 class="text-2xl font-bold mb-4">Growth Marketing</h3>
+                <p class="text-slate-400 mb-6 max-w-sm">Scalable acquisition systems across paid media, organic search, and social.</p>
+                <ul class="space-y-2 text-sm text-slate-500 font-medium">
+                    <li>• Performance Ads</li>
+                    <li>• SEO Strategy</li>
+                    <li>• Funnel Optimization</li>
+                </ul>
+            </div>
+            <div class="group relative bg-slate-900 border border-slate-800 rounded-2xl p-8 hover:bg-slate-800 transition-colors duration-300">
+                <h3 class="text-2xl font-bold mb-4">Automation</h3>
+                <p class="text-slate-400 mb-6 max-w-sm">Connecting your tech stack to automate lead nurture, sales routing, and support.</p>
+                <ul class="space-y-2 text-sm text-slate-500 font-medium">
+                    <li>• CRM Integrations</li>
+                    <li>• Workflow Automation</li>
+                    <li>• Email Marketing Systems</li>
+                </ul>
+            </div>
+            <div class="group relative bg-slate-900 border border-slate-800 rounded-2xl p-8 hover:bg-slate-800 transition-colors duration-300">
+                <h3 class="text-2xl font-bold mb-4">Brand Strategy</h3>
+                <p class="text-slate-400 mb-6 max-w-sm">Premium positioning, visual identity, and messaging frameworks that demand attention.</p>
+                <ul class="space-y-2 text-sm text-slate-500 font-medium">
+                    <li>• Brand Identity</li>
+                    <li>• Positioning</li>
+                    <li>• UX/UI Design</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Featured Links (CMS Integration) -->
+    @if($featuredLinks->count() > 0)
+    <section class="bg-slate-900/30 border-y border-slate-800/50 py-24">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-2xl font-bold tracking-tight mb-8">Selected Case Studies & Links</h2>
+            <div class="flex flex-col gap-4">
+                @foreach($featuredLinks as $link)
+                    <a href="{{ route('links.redirect', $link->id) }}" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between p-6 bg-slate-900 border border-slate-700 rounded-xl hover:border-indigo-500 transition-all duration-300 shadow-sm hover:shadow-indigo-500/10">
+                        <div class="text-left">
+                            <h3 class="font-bold text-white text-lg group-hover:text-indigo-400 transition-colors">{{ $link->title }}</h3>
+                            @if($link->description)
+                                <p class="text-sm text-slate-400 mt-1">{{ $link->description }}</p>
+                            @endif
+                        </div>
+                        <svg class="w-5 h-5 text-slate-500 group-hover:text-indigo-400 transition-colors transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    </section>
     @endif
+
+    <!-- 6. Trust Section -->
+    <section class="max-w-6xl mx-auto px-6 py-24 text-center">
+        <p class="text-sm font-semibold text-slate-500 uppercase tracking-widest mb-10">Trusted by modern companies</p>
+        <div class="flex flex-wrap justify-center gap-12 md:gap-24 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+            <div class="text-2xl font-bold tracking-tighter">Acme Corp</div>
+            <div class="text-2xl font-bold tracking-tighter font-serif">GlobalTech</div>
+            <div class="text-2xl font-black tracking-widest">NEXUS</div>
+            <div class="text-2xl font-medium tracking-tight">Opal</div>
+        </div>
+    </section>
+
+    <!-- 7. CTA Section -->
+    <section class="border-t border-slate-800">
+        <div class="max-w-4xl mx-auto px-6 py-32 text-center">
+            <h2 class="text-4xl font-extrabold tracking-tight mb-6">Ready to scale?</h2>
+            <p class="text-slate-400 mb-10 text-lg">Let's build a growth infrastructure that turns your traffic into revenue.</p>
+            <a href="mailto:hello@titora.co.in" class="inline-flex items-center justify-center px-8 py-4 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-500 transition-colors duration-300">
+                Start a Project
+            </a>
+        </div>
+    </section>
+
+    <footer class="border-t border-slate-800/50 py-10 text-center">
+        <p class="text-slate-600 text-sm">© {{ date('Y') }} TITORA. All rights reserved.</p>
+    </footer>
+
 </div>
 @endsection

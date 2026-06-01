@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
-@section('title', $profile->seo_title ?: $profile->name . ' | DOOB')
-@section('description', $profile->seo_description ?: $profile->bio)
+@section('title', $profile->seo_title ?: 'DOOB | Growth Infrastructure for Modern Creators')
+@section('description', $profile->seo_description ?: 'APIs, infrastructure, and tools to scale your creator network across Instagram, YouTube, TikTok, and Spotify.')
 @if($profile->avatar)
 @section('og_image', Storage::disk('public')->url($profile->avatar))
 @endif
@@ -9,117 +9,225 @@
 @section('theme_styles')
 <style>
     body {
-        background: linear-gradient(135deg, #020617 0%, #064e3b 100%);
+        background-color: #0b0f19;
+        color: #e2e8f0;
     }
 </style>
 @endsection
 
 @section('content')
 @php
-    $socialTypes = ['social', 'instagram', 'youtube', 'whatsapp', 'email'];
-    $socialLinks = $profile->links->whereIn('type', $socialTypes);
-    $mainLinks = $profile->links->whereNotIn('type', $socialTypes);
-    $featuredLinks = $mainLinks->where('is_featured', true);
-    $otherLinks = $mainLinks->where('is_featured', false);
+    $featuredLinks = $profile->links->where('is_featured', true);
 @endphp
 
-<div class="flex flex-col items-center w-full animate-fade-in-up font-sans">
-    <!-- Avatar -->
-    @if($profile->avatar)
-        <img src="{{ Storage::disk('public')->url($profile->avatar) }}" 
-             alt="{{ $profile->avatar_alt ?: $profile->name }}" 
-             class="w-28 h-28 rounded-xl object-cover shadow-[0_0_30px_rgba(16,185,129,0.3)] border-2 border-emerald-500/50 mb-6">
-    @else
-        <div class="w-28 h-28 rounded-xl shadow-[0_0_30px_rgba(16,185,129,0.3)] border-2 border-emerald-500/50 mb-6 bg-slate-900 flex items-center justify-center text-3xl font-mono text-emerald-400">
-            {{ strtoupper(substr($profile->name, 0, 2)) }}
+<div class="w-full animate-fade-in-up font-sans selection:bg-emerald-500/30">
+    
+    <!-- Navbar -->
+    <header class="w-full max-w-7xl mx-auto px-6 py-6 border-b border-white/5 flex items-center justify-between sticky top-0 bg-[#0b0f19]/80 backdrop-blur-xl z-50">
+        <div class="flex items-center gap-3">
+            @if($profile->avatar)
+                <img src="{{ Storage::disk('public')->url($profile->avatar) }}" alt="{{ $profile->name }}" class="w-8 h-8 rounded-md bg-emerald-900 border border-emerald-500/30">
+            @else
+                <div class="w-8 h-8 rounded-md bg-emerald-600 flex items-center justify-center text-xs font-bold text-white shadow-[0_0_15px_rgba(16,185,129,0.4)]">DB</div>
+            @endif
+            <span class="font-bold text-lg tracking-tight text-white">DOOB</span>
         </div>
-    @endif
+        <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-400">
+            <a href="#features" class="hover:text-emerald-400 transition-colors">Features</a>
+            <a href="#infrastructure" class="hover:text-emerald-400 transition-colors">Infrastructure</a>
+            <a href="#links" class="hover:text-emerald-400 transition-colors">Resources</a>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="#" class="hidden sm:block text-sm font-medium text-slate-300 hover:text-white transition-colors">Documentation</a>
+            <a href="#" class="px-4 py-2 bg-emerald-500 text-black text-sm font-bold rounded hover:bg-emerald-400 transition-colors shadow-[0_0_15px_rgba(16,185,129,0.3)]">Start Growing</a>
+        </div>
+    </header>
 
-    <!-- Name & Verified -->
-    <h1 class="text-3xl font-bold text-white flex items-center gap-2 mb-2 tracking-tight">
-        {{ $profile->name }}
-        @if($profile->is_verified)
-            <svg class="w-6 h-6 text-emerald-500" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        @endif
-    </h1>
-
-    <!-- Headline -->
-    @if($profile->headline)
-        <p class="text-emerald-400 font-mono text-sm mb-3 text-center uppercase tracking-widest">{{ $profile->headline }}</p>
-    @endif
-
-    <!-- Bio -->
-    @if($profile->bio)
-        <p class="text-slate-300 text-center text-sm mb-10 max-w-sm leading-relaxed">{{ $profile->bio }}</p>
-    @endif
-
-    <!-- Links Container -->
-    <div class="w-full space-y-4 mb-10">
+    <!-- 1. Hero Section -->
+    <section class="relative overflow-hidden pt-24 pb-32">
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgc3Ryb2tlPSIjMWUyOTNiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPjxwYXRoIGQ9Ik0wIDYwaDYwTTYwIDB2NjAiLz48L2c+PC9zdmc+')] opacity-20"></div>
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-96 bg-emerald-500/10 blur-[120px] rounded-full"></div>
         
-        @if($mainLinks->isEmpty() && $socialLinks->isEmpty())
-            <div class="w-full py-12 text-center text-emerald-500 bg-slate-900/50 rounded-lg border border-emerald-500/20 text-sm font-mono">
-                No active endpoints.
-            </div>
-        @endif
-
-        <!-- Featured Links -->
-        @foreach($featuredLinks as $link)
-            <a href="{{ route('links.redirect', $link->id) }}" 
-               target="_blank" rel="noopener noreferrer"
-               class="block w-full bg-slate-900/80 border border-emerald-500/50 hover:border-emerald-400 hover:shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:-translate-y-1 transition-all duration-300 rounded-lg py-4 px-6 shadow-xl group relative overflow-hidden backdrop-blur-md">
-                <div class="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500 group-hover:w-2 transition-all duration-300"></div>
-                <div class="flex items-center justify-center relative z-10">
-                    <span class="font-bold text-white tracking-wide">{{ $link->title }}</span>
-                </div>
-                @if($link->description)
-                    <div class="text-sm text-slate-400 text-center mt-1 relative z-10 font-medium">{{ $link->description }}</div>
-                @endif
-            </a>
-        @endforeach
-
-        <!-- Other Links -->
-        @foreach($otherLinks as $link)
-            <a href="{{ route('links.redirect', $link->id) }}" 
-               target="_blank" rel="noopener noreferrer"
-               class="block w-full bg-slate-900/50 border border-blue-900/50 hover:border-blue-500/50 hover:bg-slate-800 hover:-translate-y-0.5 transition-all duration-300 rounded-lg py-4 px-6 shadow-md group">
-                <div class="flex items-center justify-center">
-                    <span class="font-medium text-slate-300 tracking-wide">{{ $link->title }}</span>
-                </div>
-            </a>
-        @endforeach
-
-    </div>
-
-    <!-- Social Links -->
-    @if($socialLinks->count() > 0)
-        <div class="flex flex-wrap justify-center gap-4 mt-4">
-            @foreach($socialLinks as $link)
-                <a href="{{ route('links.redirect', $link->id) }}" 
-                   target="_blank" rel="noopener noreferrer"
-                   title="{{ $link->title }}"
-                   class="flex items-center justify-center w-12 h-12 rounded-lg bg-slate-900/80 border border-slate-700 hover:bg-emerald-600 hover:border-emerald-500 hover:scale-105 transition-all duration-300 text-slate-400 hover:text-white shadow-lg">
-                   
-                   @if($link->type === 'instagram' || strtolower($link->title) === 'instagram')
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                   @elseif($link->type === 'youtube' || strtolower($link->title) === 'youtube')
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                   @elseif($link->type === 'whatsapp' || strtolower($link->title) === 'whatsapp')
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.385 0 0 5.386 0 12.035c0 2.12.553 4.195 1.602 6.012L.475 24l6.104-1.602a11.967 11.967 0 005.452 1.312h.005c6.645 0 12.03-5.386 12.03-12.034C24.066 5.386 18.676 0 12.031 0zm0 21.727h-.003a9.98 9.98 0 01-5.083-1.385l-.364-.216-3.774.99.999-3.68-.237-.376a9.987 9.987 0 01-1.528-5.321c0-5.508 4.48-9.988 9.99-9.988 5.509 0 9.989 4.48 9.989 9.988 0 5.509-4.48 9.989-9.989 9.989zm5.474-7.487c-.3-.15-1.776-.877-2.051-.977-.276-.101-.477-.15-.678.15s-.777.978-.952 1.178c-.176.2-.352.225-.653.075-2.003-1.002-3.32-2.186-4.22-3.71-.151-.253.15-.228.725-1.378.1-.15.05-.276-.025-.426-.075-.15-.678-1.63-.928-2.233-.243-.585-.49-.505-.678-.515-.175-.008-.376-.008-.577-.008s-.527.075-.802.376c-.276.3-1.053 1.028-1.053 2.506 0 1.478 1.078 2.906 1.228 3.107.151.2 2.115 3.228 5.12 4.524.716.31 1.275.495 1.708.634.72.23 1.376.197 1.89.12.576-.086 1.776-.726 2.026-1.428.25-.702.25-1.303.175-1.428-.075-.126-.276-.2-.577-.35z"/></svg>
-                   @elseif($link->type === 'email' || strtolower($link->title) === 'email')
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12.713l11.985-8.71C23.636 2.27 21.968 1 20 1H4C2.031 1 .363 2.27.015 4.004L12 12.713zm0 2.574L0 6.58V20c0 1.657 1.343 3 3 3h18c1.657 0 3-1.343 3-3V6.58l-12 8.707z"/></svg>
-                   @elseif(strtolower($link->title) === 'x' || strtolower($link->title) === 'twitter')
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
-                   @elseif(strtolower($link->title) === 'linkedin')
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                   @else
-                        <!-- Generic Link Icon -->
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12.53 16.28a.75.75 0 01-1.06 0l-7.5-7.5a.75.75 0 011.06-1.06L12 14.69l6.97-6.97a.75.75 0 111.06 1.06l-7.5 7.5z" clip-rule="evenodd" /></svg>
-                   @endif
+        <div class="relative max-w-5xl mx-auto px-6 text-center z-10">
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 text-white leading-tight">
+                Growth Infrastructure <br> For Modern Creators
+            </h1>
+            <p class="text-lg md:text-xl text-slate-400 font-medium mb-10 max-w-3xl mx-auto">
+                Connect, automate, and scale your audience across Instagram, YouTube, TikTok, and Spotify with enterprise-grade reliability.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+                <a href="#" class="w-full sm:w-auto px-8 py-3 bg-emerald-500 text-black font-bold rounded hover:bg-emerald-400 transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)]">
+                    Start Growing Free
                 </a>
-            @endforeach
+                <a href="#" class="w-full sm:w-auto px-8 py-3 bg-[#111827] border border-slate-700 text-white font-semibold rounded hover:border-emerald-500/50 hover:bg-[#1f2937] transition-all">
+                    Become Partner
+                </a>
+            </div>
+
+            <!-- Dashboard Mockup -->
+            <div class="relative mx-auto max-w-4xl rounded-xl border border-slate-700 bg-[#0f172a] shadow-2xl overflow-hidden text-left">
+                <div class="flex items-center px-4 py-3 border-b border-slate-800 bg-[#1e293b]">
+                    <div class="flex gap-2">
+                        <div class="w-3 h-3 rounded-full bg-slate-600"></div>
+                        <div class="w-3 h-3 rounded-full bg-slate-600"></div>
+                        <div class="w-3 h-3 rounded-full bg-slate-600"></div>
+                    </div>
+                </div>
+                <div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="col-span-2 border border-slate-800 rounded bg-[#0f172a] p-5">
+                        <div class="text-sm font-medium text-slate-400 mb-1">Total Audience Reach</div>
+                        <div class="text-3xl font-bold text-white mb-6">4.2M <span class="text-emerald-500 text-sm ml-2">↑ 12%</span></div>
+                        <!-- Mock Graph -->
+                        <div class="flex items-end gap-2 h-24 mt-4">
+                            <div class="w-full bg-emerald-500/20 rounded-t h-[40%]"></div>
+                            <div class="w-full bg-emerald-500/30 rounded-t h-[50%]"></div>
+                            <div class="w-full bg-emerald-500/40 rounded-t h-[30%]"></div>
+                            <div class="w-full bg-emerald-500/50 rounded-t h-[70%]"></div>
+                            <div class="w-full bg-emerald-500/70 rounded-t h-[60%]"></div>
+                            <div class="w-full bg-emerald-500 rounded-t h-[90%] shadow-[0_0_10px_rgba(16,185,129,0.5)]"></div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-4">
+                        <div class="border border-slate-800 rounded p-4 flex justify-between items-center bg-[#1e293b]">
+                            <div>
+                                <div class="text-xs text-slate-400">Instagram API</div>
+                                <div class="text-sm font-bold text-white">Connected</div>
+                            </div>
+                            <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,1)]"></div>
+                        </div>
+                        <div class="border border-slate-800 rounded p-4 flex justify-between items-center bg-[#1e293b]">
+                            <div>
+                                <div class="text-xs text-slate-400">YouTube Sync</div>
+                                <div class="text-sm font-bold text-white">Connected</div>
+                            </div>
+                            <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,1)]"></div>
+                        </div>
+                        <div class="border border-slate-800 rounded p-4 flex justify-between items-center bg-[#1e293b]">
+                            <div>
+                                <div class="text-xs text-slate-400">Spotify Playlisting</div>
+                                <div class="text-sm font-bold text-white">Processing</div>
+                            </div>
+                            <div class="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,1)] animate-pulse"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
+
+    <!-- 2. Platform Features -->
+    <section id="features" class="py-24 border-t border-slate-800 bg-[#0b0f19]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-white mb-4">Built for scale, designed for speed.</h2>
+                <p class="text-slate-400 max-w-2xl mx-auto">Everything you need to manage cross-platform growth without touching a spreadsheet.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-[#111827] border border-slate-800 p-8 rounded-xl hover:border-emerald-500/30 transition-colors">
+                    <div class="w-10 h-10 rounded bg-[#1f2937] border border-slate-700 flex items-center justify-center mb-6 text-emerald-400">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <h3 class="text-white font-bold text-lg mb-3">Real-time Sync</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Metrics update instantly via webhooks. Stop waiting for daily cron jobs to know your numbers.</p>
+                </div>
+                <div class="bg-[#111827] border border-slate-800 p-8 rounded-xl hover:border-emerald-500/30 transition-colors">
+                    <div class="w-10 h-10 rounded bg-[#1f2937] border border-slate-700 flex items-center justify-center mb-6 text-emerald-400">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    </div>
+                    <h3 class="text-white font-bold text-lg mb-3">Enterprise Security</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">OAuth2 compliant, SOC2 ready infrastructure. Your audience data is isolated and encrypted.</p>
+                </div>
+                <div class="bg-[#111827] border border-slate-800 p-8 rounded-xl hover:border-emerald-500/30 transition-colors">
+                    <div class="w-10 h-10 rounded bg-[#1f2937] border border-slate-700 flex items-center justify-center mb-6 text-emerald-400">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                    </div>
+                    <h3 class="text-white font-bold text-lg mb-3">Developer APIs</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">Full programmatic access to your audience graph. Build custom apps on top of DOOB.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Growth Categories -->
+    <section class="py-24 border-t border-slate-800 bg-[#0f172a]">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+            <div>
+                <h2 class="text-3xl font-bold text-white mb-6">Multi-platform routing.</h2>
+                <p class="text-slate-400 mb-8 leading-relaxed">
+                    Routing traffic from short-form video to long-form content or monetized platforms is completely broken. We built DOOB to fix the conversion leak.
+                </p>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-xs">✓</div>
+                        <span class="text-slate-300 font-medium">Smart links that deep-link directly into native apps</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-xs">✓</div>
+                        <span class="text-slate-300 font-medium">Algorithmic A/B testing on landing pages</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-xs">✓</div>
+                        <span class="text-slate-300 font-medium">Audience pixel tracking across 7 platforms</span>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-[#1e293b] border border-slate-700 rounded-xl p-8 shadow-xl">
+                <div class="text-xs font-mono text-slate-500 mb-4">// POST /v1/routing/smart-link</div>
+                <pre class="text-emerald-400 font-mono text-sm overflow-x-auto"><code>{
+  "destination": "spotify_album",
+  "fallbacks": {
+    "ios": "apple_music",
+    "android": "youtube_music"
+  },
+  "utm_source": "tiktok_bio",
+  "track_conversions": true
+}</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Featured Links (CMS Integration) -->
+    @if($featuredLinks->count() > 0)
+    <section id="links" class="py-24 border-t border-slate-800 bg-[#0b0f19]">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-2xl font-bold tracking-tight mb-8 text-white">Live Endpoints & Resources</h2>
+            <div class="grid sm:grid-cols-2 gap-4 text-left">
+                @foreach($featuredLinks as $link)
+                    <a href="{{ route('links.redirect', $link->id) }}" target="_blank" rel="noopener noreferrer" class="group flex flex-col justify-between p-5 bg-[#111827] border border-slate-700 rounded-lg hover:border-emerald-500/50 transition-colors duration-300">
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="font-bold text-white group-hover:text-emerald-400 transition-colors">{{ $link->title }}</h3>
+                            <svg class="w-4 h-4 text-slate-500 group-hover:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        </div>
+                        @if($link->description)
+                            <p class="text-sm text-slate-400">{{ $link->description }}</p>
+                        @endif
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    </section>
     @endif
+
+    <!-- 5. CTA -->
+    <section class="py-32 border-t border-slate-800 bg-gradient-to-b from-[#0b0f19] to-black">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold text-white mb-6">Build your audience graph today.</h2>
+            <p class="text-slate-400 mb-10">Stop losing traffic. Start capturing it.</p>
+            <div class="flex justify-center gap-4">
+                <a href="#" class="px-8 py-3 bg-emerald-500 text-black font-bold rounded hover:bg-emerald-400 transition-colors">
+                    Create Account
+                </a>
+                <a href="#" class="px-8 py-3 bg-[#111827] border border-slate-700 text-white font-medium rounded hover:bg-[#1f2937] transition-colors">
+                    Read the Docs
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-8 text-center border-t border-slate-800/50 bg-black">
+        <p class="text-slate-600 text-sm">© {{ date('Y') }} DOOB Infrastructure. All systems operational.</p>
+    </footer>
+
 </div>
 @endsection
