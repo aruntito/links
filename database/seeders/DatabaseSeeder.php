@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Arun',
                 'slug' => 'arun',
                 'headline' => 'Founder of TITORA',
+                'bio' => 'Building TITORA, DOOB and digital infrastructure products.',
                 'theme' => ThemeType::DEFAULT->value,
             ],
             [

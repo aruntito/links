@@ -26,12 +26,12 @@
     </style>
 </head>
 <body class="min-h-screen antialiased flex flex-col items-center py-12 px-4 selection:bg-indigo-500 selection:text-white">
-    <main class="w-full max-w-lg mx-auto">
+    <main class="w-full max-w-xl mx-auto">
         @yield('content')
     </main>
 
-    <footer class="mt-12 text-center text-sm text-gray-500 pb-8">
-        <p>Powered by <a href="/" class="text-gray-400 hover:text-white transition">TITORA Links</a></p>
+    <footer class="mt-16 text-center text-xs tracking-wide text-gray-500/80 pb-8 uppercase font-medium">
+        <p>Powered by <a href="/" class="text-gray-400 hover:text-white transition">TITORA</a></p>
     </footer>
 </body>
 </html>
