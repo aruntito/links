@@ -6,3 +6,5 @@ builder = "NIXPACKS"
 # This ensures migrations and caching are done before the app boots, fulfilling the requirement
 # "Do not run migrations inside application boot/start command."
 releaseCommand = "bash railway/init-app.sh"
+[deploy]
+startCommand = "php artisan serve --host=0.0.0.0 --port=$PORT"
