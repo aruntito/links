@@ -15,11 +15,8 @@ return new class extends Migration
             $table->ulid('id')->primary();
             $table->foreignUlid('profile_link_id')->constrained('profile_links')->cascadeOnDelete();
             $table->string('ip_address')->nullable();
-            $table->string('country')->nullable();
-            $table->string('city')->nullable();
-            $table->string('device_type')->nullable();
-            $table->string('browser')->nullable();
             $table->text('referrer')->nullable();
+            $table->text('user_agent')->nullable();
             $table->timestamps();
         });
     }

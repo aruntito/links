@@ -38,7 +38,7 @@ class ProfileResource extends Resource
                             ->required()
                             ->maxLength(255)
                             ->unique(ignoreRecord: true)
-                            ->notIn(['admin', 'login', 'register', 'api', 'dashboard', 'storage', 'assets', 'filament'])
+                            ->notIn(['admin', 'login', 'register', 'api', 'dashboard', 'storage', 'assets', 'filament', 'livewire', 'up', 'health'])
                             ->helperText('This will be the URL: links.titora.co.in/slug'),
                             
                         Forms\Components\TextInput::make('headline')

@@ -14,11 +14,8 @@ class LinkClick extends Model
     protected $fillable = [
         'profile_link_id',
         'ip_address',
-        'country',
-        'city',
-        'device_type',
-        'browser',
         'referrer',
+        'user_agent',
     ];
 
     public function link(): BelongsTo
