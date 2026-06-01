@@ -18,7 +18,10 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $adminPassword = Str::random(16);
-        $this->command->info("Admin User Created: admin@titora.co.in | Password: {$adminPassword}");
+        
+        if (app()->environment('local')) {
+            $this->command->info("Admin User Created: admin@titora.co.in | Password: {$adminPassword}");
+        }
 
         // Admin user
         User::factory()->create([
