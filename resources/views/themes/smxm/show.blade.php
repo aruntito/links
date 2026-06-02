@@ -19,8 +19,11 @@
     }
     /* Bold, tight, brutalist typography */
     .font-impact {
-        font-family: 'Inter', sans-serif;
-        letter-spacing: -0.04em;
+        font-family: 'Bricolage Grotesque', sans-serif;
+        letter-spacing: -0.02em;
+    }
+    .font-mono {
+        font-family: 'Space Mono', monospace;
     }
     .marquee {
         white-space: nowrap;
@@ -192,6 +195,11 @@
             Get Proposal
         </a>
     </section>
+
+    <!-- Subtle Footer -->
+    <footer class="py-12 bg-black text-center border-t border-gray-900">
+        <p class="text-xs font-mono uppercase tracking-widest text-gray-600">Powered by TITORA</p>
+    </footer>
 
 </div>
 @endsection

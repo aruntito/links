@@ -8,7 +8,8 @@
 
 @section('theme_styles')
 <style>
-    body {
+    body, .font-sans {
+        font-family: 'Plus Jakarta Sans', sans-serif;
         background-color: #000000;
         color: #e5e5e5;
     }
@@ -27,7 +28,7 @@
         background: #111111;
         border-bottom: 1px solid #1f1f1f;
         padding: 8px 12px;
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        font-family: 'Fira Code', monospace;
         font-size: 0.65rem;
         letter-spacing: 0.1em;
         text-transform: uppercase;
@@ -37,7 +38,7 @@
         align-items: center;
     }
     .data-value {
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-family: 'Fira Code', monospace;
         font-size: 2rem;
         font-weight: 700;
         letter-spacing: -0.05em;
@@ -45,7 +46,7 @@
         color: #fff;
     }
     .data-label {
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-family: 'Fira Code', monospace;
         font-size: 0.7rem;
         color: #666;
         margin-top: 4px;
@@ -58,8 +59,8 @@
         display: inline-block;
         margin-right: 6px;
     }
-    .status-ok { background-color: #10b981; box-shadow: 0 0 8px rgba(16, 185, 129, 0.5); }
-    .status-warn { background-color: #f59e0b; box-shadow: 0 0 8px rgba(245, 158, 11, 0.5); }
+    .status-ok { background-color: #10b981; box-shadow: 0 0 4px rgba(16, 185, 129, 0.2); }
+    .status-warn { background-color: #f59e0b; box-shadow: 0 0 4px rgba(245, 158, 11, 0.2); }
     
     /* Animations for "live" feel */
     @keyframes pulse-opacity {
@@ -153,7 +154,7 @@
             <div class="dashboard-panel p-4 flex flex-col justify-between">
                 <div class="data-label mb-4">STATUS</div>
                 <div class="flex items-center gap-3">
-                    <div class="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.8)] animate-pulse-fast"></div>
+                    <div class="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(16,185,129,0.3)] animate-pulse-fast"></div>
                     <div class="text-emerald-500 font-mono text-sm font-bold tracking-widest">OPERATIONAL</div>
                 </div>
             </div>
@@ -348,5 +349,11 @@
             </div>
         </div>
     </div>
+    
+    <!-- Subtle Footer -->
+    <footer class="py-12 bg-black text-center border-t border-[#1f1f1f]">
+        <p class="text-xs font-mono uppercase tracking-widest text-[#666]" style="font-family: 'Fira Code', monospace;">Powered by TITORA</p>
+    </footer>
+
 </div>
 @endsection

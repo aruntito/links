@@ -8,15 +8,19 @@
 
 @section('theme_styles')
 <style>
-    body {
-        background-color: #020617; /* Slate 950 */
-        color: #f8fafc; /* Slate 50 */
-        background-image: linear-gradient(#0f172a 1px, transparent 1px), linear-gradient(90deg, #0f172a 1px, transparent 1px);
+    body, .font-sans {
+        font-family: 'Geist', sans-serif;
+        background-color: #050505;
+        color: #f8fafc;
+        background-image: linear-gradient(#111 1px, transparent 1px), linear-gradient(90deg, #111 1px, transparent 1px);
         background-size: 40px 40px;
     }
+    .font-mono {
+        font-family: 'Geist Mono', monospace;
+    }
     .blueprint-card {
-        background: rgba(15, 23, 42, 0.8);
-        border: 1px solid #1e293b;
+        background: rgba(10, 10, 10, 0.8);
+        border: 1px solid #1f2937;
         backdrop-filter: blur(8px);
     }
 </style>
@@ -166,7 +170,7 @@
     @endif
 
     <footer class="py-12 border-t border-slate-800 text-center font-mono text-xs text-slate-600">
-        <p>TITORA SYSTEMS © {{ date('Y') }} // END OF FILE</p>
+        <p>Powered by TITORA // END OF FILE</p>
     </footer>
 
 </div>

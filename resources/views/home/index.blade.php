@@ -38,66 +38,75 @@
         </p>
     </div>
 
-    <!-- The Integrated Machine (Architecture Diagram) -->
-    <div class="max-w-3xl mx-auto px-6 pb-32">
-        <div class="border border-zinc-800 bg-[#0a0a0a] rounded-xl p-8 md:p-16">
-            <h2 class="text-xs tracking-widest font-mono text-zinc-500 uppercase mb-16 text-center">Integrated Ecosystem Architecture</h2>
+    <!-- The Ecosystem Bento Grid -->
+    <div class="max-w-5xl mx-auto px-6 pb-32">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 relative group">
             
-            <div class="flex flex-col relative">
+            <!-- SMXM -->
+            <a href="{{ route('profile.show', 'smxm') }}" class="group/card relative overflow-hidden rounded-2xl bg-[#0a0a0a] border border-zinc-800/50 p-8 flex flex-col h-full transition-all duration-500 hover:!opacity-100 group-hover:opacity-60 hover:-translate-y-1 hover:shadow-2xl hover:border-zinc-700">
+                <!-- Subtle glow -->
+                <div class="absolute -top-24 -right-24 w-48 h-48 bg-pink-500/5 rounded-full blur-3xl opacity-0 transition-opacity duration-500 group-hover/card:opacity-100 pointer-events-none"></div>
                 
-                <!-- SMXM Node -->
-                <a href="{{ route('profile.show', 'smxm') }}" class="group relative z-10 flex flex-col md:flex-row items-center md:items-start gap-6 p-6 border border-zinc-800 bg-black rounded-lg hover:border-pink-500/50 transition-colors">
-                    <div class="w-16 h-16 flex-shrink-0 bg-zinc-900 border border-zinc-800 rounded flex items-center justify-center font-black text-xl text-white group-hover:text-pink-500 transition-colors">S.</div>
-                    <div class="text-center md:text-left">
-                        <h3 class="text-xl font-bold text-white tracking-tight mb-1">SMXM</h3>
-                        <p class="text-sm font-mono text-pink-500 mb-3">Creates demand.</p>
-                        <p class="text-sm text-zinc-500">The attention acquisition engine. High-velocity cultural output that generates massive top-of-funnel volume and awareness.</p>
+                <div class="mb-auto z-10">
+                    <h3 class="text-sm font-mono tracking-widest text-zinc-400 uppercase mb-2">SMXM</h3>
+                    <div class="relative h-10">
+                        <p class="text-3xl font-bold tracking-tight text-white absolute inset-0 transition-all duration-300 opacity-100 group-hover/card:opacity-0 group-hover/card:-translate-y-4" style="font-family: 'Bricolage Grotesque', sans-serif;">Creates Attention</p>
+                        <p class="text-3xl font-bold tracking-tight text-pink-400 absolute inset-0 transition-all duration-300 opacity-0 translate-y-4 group-hover/card:opacity-100 group-hover/card:translate-y-0" style="font-family: 'Bricolage Grotesque', sans-serif;">Attention Engine</p>
                     </div>
-                </a>
-
-                <div class="stack-line h-12 relative">
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0a0a0a] px-2 text-xs font-mono text-zinc-600">↓ routes attention to</div>
                 </div>
-
-                <!-- TITORA Node -->
-                <a href="{{ route('profile.show', 'titora') }}" class="group relative z-10 flex flex-col md:flex-row items-center md:items-start gap-6 p-6 border border-zinc-800 bg-black rounded-lg hover:border-blue-500/50 transition-colors">
-                    <div class="w-16 h-16 flex-shrink-0 bg-zinc-900 border border-zinc-800 rounded flex items-center justify-center font-bold text-xl text-white font-mono group-hover:text-blue-500 transition-colors">TI</div>
-                    <div class="text-center md:text-left">
-                        <h3 class="text-xl font-bold text-white tracking-tight mb-1">TITORA</h3>
-                        <p class="text-sm font-mono text-blue-500 mb-3">Captures and converts demand.</p>
-                        <p class="text-sm text-zinc-500">The growth systems architecture. Converts raw attention into qualified, algorithmic conversion structures.</p>
-                    </div>
-                </a>
-
-                <div class="stack-line h-12 relative">
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0a0a0a] px-2 text-xs font-mono text-zinc-600">↓ scales through</div>
+                <div class="z-10 mt-12">
+                    <p class="text-sm text-zinc-500 leading-relaxed font-mono" style="font-family: 'Space Mono', monospace;">The culture and distribution engine. High-velocity output generating massive top-of-funnel momentum and media-scale virality.</p>
                 </div>
+            </a>
 
-                <!-- DOOB Node -->
-                <a href="{{ route('profile.show', 'doob') }}" class="group relative z-10 flex flex-col md:flex-row items-center md:items-start gap-6 p-6 border border-zinc-800 bg-black rounded-lg hover:border-emerald-500/50 transition-colors">
-                    <div class="w-16 h-16 flex-shrink-0 bg-zinc-900 border border-zinc-800 rounded flex items-center justify-center font-bold text-sm text-white group-hover:text-emerald-500 transition-colors">DOOB</div>
-                    <div class="text-center md:text-left">
-                        <h3 class="text-xl font-bold text-white tracking-tight mb-1">DOOB</h3>
-                        <p class="text-sm font-mono text-emerald-500 mb-3">Scales and routes demand.</p>
-                        <p class="text-sm text-zinc-500">The infrastructure layer. The network mesh and execution pipelines required to handle conversion data at internet scale.</p>
+            <!-- TITORA -->
+            <a href="{{ route('profile.show', 'titora') }}" class="group/card relative overflow-hidden rounded-2xl bg-[#0a0a0a] border border-zinc-800/50 p-8 flex flex-col h-full transition-all duration-500 hover:!opacity-100 group-hover:opacity-60 hover:-translate-y-1 hover:shadow-2xl hover:border-zinc-700">
+                <div class="absolute -top-24 -right-24 w-48 h-48 bg-blue-500/5 rounded-full blur-3xl opacity-0 transition-opacity duration-500 group-hover/card:opacity-100 pointer-events-none"></div>
+                
+                <div class="mb-auto z-10">
+                    <h3 class="text-sm font-mono tracking-widest text-zinc-400 uppercase mb-2" style="font-family: 'Geist Mono', monospace;">TITORA</h3>
+                    <div class="relative h-10">
+                        <p class="text-3xl font-semibold tracking-tight text-white absolute inset-0 transition-all duration-300 opacity-100 group-hover/card:opacity-0 group-hover/card:-translate-y-4" style="font-family: 'Geist', sans-serif; letter-spacing: -0.04em;">Converts Attention</p>
+                        <p class="text-3xl font-semibold tracking-tight text-blue-400 absolute inset-0 transition-all duration-300 opacity-0 translate-y-4 group-hover/card:opacity-100 group-hover/card:translate-y-0" style="font-family: 'Geist', sans-serif; letter-spacing: -0.04em;">Growth Architecture</p>
                     </div>
-                </a>
-
-                <div class="stack-line h-12 relative">
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0a0a0a] px-2 text-xs font-mono text-zinc-600">↓ secured by</div>
                 </div>
+                <div class="z-10 mt-12">
+                    <p class="text-sm text-zinc-500 leading-relaxed font-mono" style="font-family: 'Geist Mono', monospace;">The growth systems architecture. Engineered to capture and convert raw attention into precise, scalable digital structures.</p>
+                </div>
+            </a>
 
-                <!-- KARADAVI Node -->
-                <a href="{{ route('profile.show', 'karadavi') }}" class="group relative z-10 flex flex-col md:flex-row items-center md:items-start gap-6 p-6 border border-zinc-800 bg-black rounded-lg hover:border-zinc-400 transition-colors">
-                    <div class="w-16 h-16 flex-shrink-0 bg-zinc-900 border border-zinc-800 rounded flex items-center justify-center font-bold text-sm text-white font-serif italic group-hover:text-zinc-300 transition-colors">K/R</div>
-                    <div class="text-center md:text-left">
-                        <h3 class="text-xl font-bold text-white tracking-tight mb-1 font-serif italic">KARADAVI</h3>
-                        <p class="text-sm font-mono text-zinc-400 mb-3">Builds machine trust.</p>
-                        <p class="text-sm text-zinc-500">The intelligence and perception organization. Maps and structures entity authority so the entire stack is recognized by synthetic intelligence.</p>
+            <!-- DOOB -->
+            <a href="{{ route('profile.show', 'doob') }}" class="group/card md:col-span-2 relative overflow-hidden rounded-2xl bg-[#0a0a0a] border border-zinc-800/50 p-8 flex flex-col h-full transition-all duration-500 hover:!opacity-100 group-hover:opacity-60 hover:-translate-y-1 hover:shadow-2xl hover:border-zinc-700">
+                <div class="absolute -top-24 -right-24 w-48 h-48 bg-emerald-500/5 rounded-full blur-3xl opacity-0 transition-opacity duration-500 group-hover/card:opacity-100 pointer-events-none"></div>
+                
+                <div class="mb-auto z-10">
+                    <h3 class="text-sm font-mono tracking-widest text-zinc-400 uppercase mb-2">DOOB</h3>
+                    <div class="relative h-10">
+                        <p class="text-3xl font-bold tracking-tight text-white absolute inset-0 transition-all duration-300 opacity-100 group-hover/card:opacity-0 group-hover/card:-translate-y-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">Scales Attention</p>
+                        <p class="text-3xl font-bold tracking-tight text-emerald-400 absolute inset-0 transition-all duration-300 opacity-0 translate-y-4 group-hover/card:opacity-100 group-hover/card:translate-y-0" style="font-family: 'Plus Jakarta Sans', sans-serif;">Infrastructure Layer</p>
                     </div>
-                </a>
+                </div>
+                <div class="z-10 mt-12">
+                    <p class="text-sm text-zinc-500 leading-relaxed font-mono" style="font-family: 'Fira Code', monospace;">The internet infrastructure platform and creator operating system. Execution pipelines to handle growth at scale.</p>
+                </div>
+            </a>
 
-            </div>
+            <!-- KARADAVI -->
+            <a href="{{ route('profile.show', 'karadavi') }}" class="group/card md:col-span-2 relative overflow-hidden rounded-2xl bg-[#0a0a0a] border border-zinc-800/50 p-8 flex flex-col h-full transition-all duration-500 hover:!opacity-100 group-hover:opacity-60 hover:-translate-y-1 hover:shadow-2xl hover:border-zinc-700">
+                <div class="absolute -top-24 -right-24 w-48 h-48 bg-zinc-400/5 rounded-full blur-3xl opacity-0 transition-opacity duration-500 group-hover/card:opacity-100 pointer-events-none"></div>
+                
+                <div class="mb-auto z-10">
+                    <h3 class="text-sm font-mono tracking-widest text-zinc-400 uppercase mb-2" style="font-family: 'IBM Plex Mono', monospace;">KARADAVI</h3>
+                    <div class="relative h-10">
+                        <p class="text-3xl font-normal text-white italic absolute inset-0 transition-all duration-300 opacity-100 group-hover/card:opacity-0 group-hover/card:-translate-y-4" style="font-family: 'Newsreader', serif;">Understands Attention</p>
+                        <p class="text-3xl font-normal text-zinc-400 italic absolute inset-0 transition-all duration-300 opacity-0 translate-y-4 group-hover/card:opacity-100 group-hover/card:translate-y-0" style="font-family: 'Newsreader', serif;">Intelligence Layer</p>
+                    </div>
+                </div>
+                <div class="z-10 mt-12">
+                    <p class="text-sm text-zinc-500 leading-relaxed font-mono" style="font-family: 'IBM Plex Mono', monospace;">The intelligence and perception organization. Institutionalizes entity authority to build unbreakable machine trust.</p>
+                </div>
+            </a>
+
         </div>
     </div>
 

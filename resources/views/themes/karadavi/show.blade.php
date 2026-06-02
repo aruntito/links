@@ -18,7 +18,10 @@
     }
     /* Serious editorial serif */
     .font-editorial {
-        font-family: "Times New Roman", Times, serif;
+        font-family: 'Newsreader', serif;
+    }
+    .font-mono {
+        font-family: 'IBM Plex Mono', monospace;
     }
 </style>
 @endsection
@@ -188,7 +191,7 @@
                 KARADAVI RESEARCH © {{ date('Y') }}
             </div>
             <div class="text-xs font-mono {{ $isDark ? 'text-[#444]' : 'text-gray-400' }}">
-                SYS.OP. NORMAL
+                Powered by TITORA
             </div>
         </div>
     </footer>
